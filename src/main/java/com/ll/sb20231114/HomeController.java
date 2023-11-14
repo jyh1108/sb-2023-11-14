@@ -16,8 +16,10 @@ import java.util.Map;
 public class HomeController {
     @GetMapping("/")
     @ResponseBody
+        // 이 함수의 리턴값을 그대로 브라우저에 전송하라는 의미
     String showMain() {
-        return "안녕하세요";
+        System.out.println("안녕하세요!!!"); // 이 메시지는 콘솔에 출력됨, 클라이언트에게 전송되지 않습니다.
+        return "안녕하세요.";
     }
 
     @GetMapping("/about")
@@ -25,16 +27,19 @@ public class HomeController {
     String showAbout() {
         return "개발자 커뮤니티";
     }
+
     @GetMapping("/calc")
     @ResponseBody
     String showCalc(int a, int b) {
-        return "계산기 입니다.";
+        return "계산 결과 : %d".formatted(a + b);
     }
+
     @GetMapping("/calc2")
     @ResponseBody
     String showCalc2(Integer a, Integer b) {
         return "a : " + a + ", b : " + b;
     }
+
     @GetMapping("/calc3")
     @ResponseBody
     String showCalc3(
@@ -55,12 +60,13 @@ public class HomeController {
 
     @GetMapping("/calc5")
     @ResponseBody
-    String showCalc4(
+    String showCalc5(
             @RequestParam(defaultValue = "-") String a,
             @RequestParam(defaultValue = "-") String b
     ) {
         return "계산 결과 : %s".formatted(a + b);
     }
+
     @GetMapping("/calc6")
     @ResponseBody
     int showCalc6(
@@ -138,14 +144,81 @@ public class HomeController {
         }};
 
         return persons;
-
     }
+
     @GetMapping("/calc14")
     @ResponseBody
     String showCalc14() {
-        return "";
+        String html = "";
+
+        html += "<div>";
+        html += "<input type=\"text\" placeholder=\"내용\">";
+        html += "</div>";
+
+        return html;
     }
 
+    @GetMapping("/calc15")
+    @ResponseBody
+    String showCalc15() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("<div>");
+        sb.append("<input type=\"text\" placeholder=\"내용\">");
+        sb.append("</div>");
+
+        return sb.toString();
+    }
+
+    @GetMapping("/calc16")
+    @ResponseBody
+    String showCalc16() {
+        String html = "<div><input type=\"text\" placeholder=\"내용\"></div>";
+
+        return html;
+    }
+
+    @GetMapping("/calc17")
+    @ResponseBody
+    String showCalc17() {
+        String html = """
+                <div>
+                    <input type="text" placeholder="내용">
+                </div>
+                """;
+
+        return html;
+    }
+
+    @GetMapping("/calc18")
+    @ResponseBody
+    String showCalc18() {
+        String html = """
+                <div>
+                    <input type="text" placeholder="내용" value="반가워요.">
+                </div>
+                """;
+
+        return html;
+    }
+
+    @GetMapping("/calc19")
+    @ResponseBody
+    String showCalc19(
+            @RequestParam(defaultValue = "") String subject,
+            @RequestParam(defaultValue = "") String content
+    ) {
+        String html = """
+                <div>
+                    <input type="text" placeholder="제목" value="%s">
+                </div>
+                <div>
+                    <input type="text" placeholder="내용" value="%s">
+                </div>
+                """.formatted(subject, content);
+
+        return html;
+    }
 
     @GetMapping("/calc20")
     String showCalc20() {
@@ -157,6 +230,16 @@ public class HomeController {
         model.addAttribute("v1", "안녕");
         model.addAttribute("v2", "반가워");
         return "calc21";
+    }
+
+    int num = 0;
+
+    @GetMapping("/calc22")
+    @ResponseBody
+    int showCalc22() {
+        num++;
+
+        return num;
     }
 }
 
